@@ -1,0 +1,26 @@
+package com.example.demo;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.UIAsAService.model.EntityMetaData;
+import com.UIAsAService.model.EntityRecord;
+
+@Component
+public class EntityRecordImpl {
+
+private EntityRecordInterface repository;
+	
+	@Autowired
+	public EntityRecordImpl(EntityRecordInterface repository) {
+		super();
+		this.repository = repository;
+	}
+	
+	public List<EntityRecord> getAllData(String entityName) {
+		return repository.getRecordByEntityName(entityName);
+	}
+}

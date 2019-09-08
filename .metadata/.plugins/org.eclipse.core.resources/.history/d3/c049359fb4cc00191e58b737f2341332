@@ -1,0 +1,5 @@
+package com.UIAsAService.model;
+
+public class EntityRecord {
+
+}

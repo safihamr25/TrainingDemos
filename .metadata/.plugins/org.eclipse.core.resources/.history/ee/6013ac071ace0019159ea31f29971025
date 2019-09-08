@@ -1,0 +1,12 @@
+package com.UIAsAService.model;
+
+public class Field {
+  private String name;
+  private String type;
+  private String length;
+  private String precision;
+  private WebInputTag WebInputTag;
+  private String label;
+  private boolean mandatory;
+  private String defaultValue;
+}

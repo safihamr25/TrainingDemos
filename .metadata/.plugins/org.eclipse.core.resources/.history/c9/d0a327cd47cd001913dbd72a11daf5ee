@@ -1,0 +1,82 @@
+package com.UIAsAService.model;
+
+import java.util.Date;
+import java.util.HashMap;
+
+import org.springframework.data.annotation.Id;
+
+public class EntityRecord {
+	
+	private String entityType;
+	private int version;
+	private String makerID;
+	private String makerdt1;
+	private String checkerID;
+	private String checkerdt1;
+	private HashMap<String,String> jsonDocument;
+	
+	
+	public EntityRecord() {
+		super();
+	}
+
+	public EntityRecord(String entityType, int version, String makerID, String makerDate, String checkerID,
+			String checkerDate, HashMap<String, String> jsonDocument) {
+		super();
+		this.entityType = entityType;
+		this.version = version;
+		this.makerID = makerID;
+		this.makerdt1 = makerDate;
+		this.checkerID = checkerID;
+		this.checkerdt1 = checkerDate;
+		this.jsonDocument = jsonDocument;
+	}
+	
+	public String getEntityType() {
+		return entityType;
+	}
+	public void setEntityType(String entityType) {
+		this.entityType = entityType;
+	}
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	public String getMakerID() {
+		return makerID;
+	}
+	public void setMakerID(String makerID) {
+		this.makerID = makerID;
+	}
+	public String getMakerDate() {
+		return makerdt1;
+	}
+	public void setMakerDate(String makerDate) {
+		this.makerdt1 = makerDate;
+	}
+	public String getCheckerID() {
+		return checkerID;
+	}
+	public void setCheckerID(String checkerID) {
+		this.checkerID = checkerID;
+	}
+	public String getCheckerDate() {
+		return checkerdt1;
+	}
+	public void setCheckerDate(String checkerDate) {
+		this.checkerdt1 = checkerDate;
+	}
+	public HashMap<String, String> getJsonDocument() {
+		return jsonDocument;
+	}
+	public void setJsonDocument(HashMap<String, String> jsonDocument) {
+		this.jsonDocument = jsonDocument;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("makerID %s, makerdt %s",makerID,makerdt1);
+	}
+}

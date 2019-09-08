@@ -1,0 +1,123 @@
+package com.example.demo;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.UIAsAService.model.EntityMetaData;
+import com.UIAsAService.model.EntityRecord;
+import com.UIAsAService.model.WebInputTag;
+import com.UIAsAService.model.Field;
+
+public class PojoClassTest {
+
+	@Test
+	public void entityMetaDataTest() {
+		EntityMetaData em = new EntityMetaData();
+		em.setEntityName("customer");
+		String actual="customer";
+		String expected=em.getEntityName();
+		assertEquals(expected,actual);
+		List<Field> field = new ArrayList<Field>();
+		Field fields = new Field();
+		field.add(fields);
+		em.setField(field);
+		List<Field> actualField = em.getField();
+		List<Field> expectedField = field;
+		assertEquals(expectedField, actualField);
+
+
+	}
+
+	@Test
+	public void entityRecordTest() {
+		EntityRecord er = new EntityRecord();
+		er.setEntityType("customer");
+		String expectedEntityType = "customer";
+		String actualEntityType = er.getEntityType();
+		assertEquals(actualEntityType,expectedEntityType);
+		er.setVersion(6);
+		int expectedVersion = 6;
+		int actualVersion = er.getVersion();
+		assertEquals(actualVersion,expectedVersion);
+		er.setMakerID("AB12345");
+		String expectedMakerId = "AB12345";
+		String actualMakerId = er.getMakerID();
+		assertEquals(actualMakerId,expectedMakerId);
+		er.setCheckerID("AB12345");
+		String expectedCheckerId = "AB12345";
+		String actualCheckerId = er.getCheckerID();
+		assertEquals(actualCheckerId,expectedCheckerId);
+		er.setId("AB12345");
+		String expectedId = "AB12345";
+		String actualId = er.getId();
+		assertEquals(actualId,expectedId);
+
+	}
+
+	@Test
+	public void webInputTagTest() {
+		WebInputTag wi = new WebInputTag();
+		wi.setTag("dropdown");
+		String expectedTag="dropdown";
+		String actualTag=wi.getTag();
+		assertEquals(actualTag,expectedTag);
+		List<String> expectedOption = new ArrayList<String>();
+		expectedOption.add("0");
+		expectedOption.add("1");
+		wi.setOptions(expectedOption);
+		List<String> actualOption = wi.getOptions();
+		assertEquals(actualOption,expectedOption);
+		wi.setReadOnly(true);
+		boolean expectedReadOnly = true;
+		boolean actualReadOnly = wi.isReadOnly();
+		assertEquals(actualReadOnly,expectedReadOnly);
+
+	}
+
+   @Test
+   public void Fieldtest() {
+	   Field field = new Field();
+	   field.setName("branch");
+	   String actualName = field.getName();
+	   String expectedName = "branch";
+       assertEquals(expectedName, actualName);
+       field.setType("int");
+	   String actualType = field.getType();
+	   String expectedType = "int";
+       assertEquals(expectedType, actualType);
+       field.setLength("6");
+	   String actualLength = field.getLength();
+	   String expectedLength = "6";
+       assertEquals(expectedLength, actualLength);
+       field.setPrecision("8");
+	   String actualPrecision = field.getPrecision();
+	   String expectedPrecision = "8";
+       assertEquals(expectedPrecision, actualPrecision);
+       field.setLabel("Branch");
+	   String actualLabel = field.getLabel();
+	   String expectedLabel = "Branch";
+       assertEquals(expectedLabel, actualLabel);
+       field.setMandatory(true);
+	   boolean actualValue = field.isMandatory();
+	   boolean expectedValue = true;
+       assertEquals(expectedValue, actualValue);
+       field.setDefaultValue("one");
+	   String actualDefaultValue = field.getDefaultValue();
+	   String expectedDefaultValue = "one";
+       assertEquals(expectedDefaultValue,actualDefaultValue);
+       WebInputTag webInputTag = new WebInputTag();
+       field.setWebInputTag(webInputTag);
+       WebInputTag actualWebInputTag = field.getWebInputTag();
+       WebInputTag expectedWebInputTag = webInputTag;
+       assertEquals(expectedWebInputTag,actualWebInputTag);
+
+   }
+
+}

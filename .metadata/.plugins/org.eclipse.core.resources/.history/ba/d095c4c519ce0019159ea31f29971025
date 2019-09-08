@@ -1,0 +1,9 @@
+package com.UIAsAService.model;
+
+import java.util.List;
+
+public class WebInputTag {
+	private String tag;
+	private List<String> options;
+	private boolean readOnly;
+}

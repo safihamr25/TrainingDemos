@@ -1,0 +1,38 @@
+package com.example.demo;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ContactRepository {
+
+	private ContactData cd;
+
+	@Autowired
+	public ContactRepository(ContactData cd) {
+		super();
+		this.cd = cd;
+	}
+	
+	public List<Contact> getAllContacts(){
+		return cd.getAllContacts();
+	}
+	
+	public Contact getContactById(int id) {
+		return cd.getContactById(id);
+	}
+	
+	public Contact addContact(Contact contact) {
+		return cd.addContact(contact);
+	}
+	
+	public Contact updateContact(Contact contact) {
+		return cd.updateContact(contact);
+	}
+	
+	public Contact deleteContact(int id) {
+		return cd.deleteContact(id);
+	}
+}

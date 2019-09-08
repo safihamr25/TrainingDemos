@@ -1,0 +1,8 @@
+.table-scroll{
+	height :560px;
+	overflow-y : auto;
+	display:block;
+}
+
+.custom-card{cursor:pointer;}
+.custom-card .card-body{display:none;}

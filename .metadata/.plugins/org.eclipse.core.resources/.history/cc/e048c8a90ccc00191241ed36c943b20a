@@ -1,0 +1,17 @@
+package com.UIAsAService.dao;
+
+import java.util.List;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.UIAsAService.model.EntityMetaData;
+
+@Repository
+public interface EntityMetaDataDAO extends MongoRepository<EntityMetaData, Long>{
+	
+	@Query(value="{ 'entityName' : ?0 }")
+	  List<EntityMetaData> findByEntityName(String firstname);
+
+}

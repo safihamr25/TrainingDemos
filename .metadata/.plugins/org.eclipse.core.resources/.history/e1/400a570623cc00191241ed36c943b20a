@@ -1,0 +1,44 @@
+package com.example.demo;
+
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.UIAsAService.model.EntityMetaData;
+
+
+
+
+@RestController
+public class UIAsAServiceController{
+	
+	@RequestMapping("/getAllEntity")
+	public Map<String, List<String>> greeting() {
+			HashMap<String, List<String>> map = new HashMap<>();
+			List<String> entityNames = new ArrayList<String>();
+			entityNames.add("Customer");
+			entityNames.add("Portfolio");
+		    map.put("key", entityNames );
+		    return map;
+	}
+	
+	@Autowired
+	EntityMetaDataImpl service;
+	
+	@RequestMapping("/getEntityMetaData")
+	public void getEntityMetaData(){
+		System.out.println("API HIt******");
+		System.out.println(service.doDemo());
+	}
+	
+	
+
+	 
+}

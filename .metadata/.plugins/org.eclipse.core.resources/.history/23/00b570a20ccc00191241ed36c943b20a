@@ -1,0 +1,30 @@
+package com.UIAsASeervice.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.UIAsAService.dao.EntityMetaDataDAO;
+import com.UIAsAService.model.EntityMetaData;
+
+@Component
+public class EntityMetaDataServiceImpl implements EntityMetaDataService{
+	
+	 @Autowired
+	 EntityMetaDataDAO dao;
+
+	@Override
+	public List<EntityMetaData> getAllData() {
+		System.out.println("Reached Service Implementation");
+		return dao.findAll();
+	}
+
+	@Override
+	public List<EntityMetaData> getDataByEntityName(String entityName) {
+		return dao.findByEntityName(entityName);
+	}
+
+}

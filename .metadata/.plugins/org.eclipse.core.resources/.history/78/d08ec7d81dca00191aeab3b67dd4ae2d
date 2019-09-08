@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>UI As A Service</title>
+</head>
+<body style="background-color: pink">
+	<div class="panel">
+		<h2>Home Page</h2>
+	</div>
+</body>
+</html>

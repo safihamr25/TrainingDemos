@@ -1,0 +1,10 @@
+.table-scroll{
+	height :560px;
+	overflow-y : auto;
+	display:block;
+}
+
+.card{
+	margin : 10px;
+	width : 10px;
+}

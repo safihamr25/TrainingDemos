@@ -1,0 +1,43 @@
+package demo.springdata.mongodb;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.stereotype.Component;
+
+
+@Component
+public class EntityMetaDataService {
+
+	@Autowired
+	private EntityMetaDataRepository repository;
+	
+	public void doDemo() {
+		// Get all employees.
+		HashMap<String,Object> map = new HashMap<>();
+		List<String> list = new ArrayList<>();
+		list.add("red");
+		list.add("blue");
+		map.put("options", list);
+		ArrayList<HashMap<String,Object>> m = new ArrayList<>();
+		m.add(map);
+		EntityMetaData newEmp = new EntityMetaData(-1, "TestEntity",m);
+//		repository.save(newEmp);
+		displayEmployees("All employees after insert: ", repository.findAll());
+		System.out.println(repository.findAll());
+	}
+	
+	private void displayEmployees(String message, Iterable<EntityMetaData> employees) {
+		System.out.printf("\n%s\n", message);
+		for (EntityMetaData emp: employees) {
+			System.out.println(emp);
+		}
+	}
+}
+

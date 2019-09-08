@@ -1,0 +1,9 @@
+package com.example.demo;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import com.UIAsAService.model.EntityMetaData;
+
+public interface EntityRecordInterface extends MongoRepository<EntityRecord,Object> {
+
+}

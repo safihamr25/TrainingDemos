@@ -1,0 +1,58 @@
+.table-scroll{
+	height :560px;
+	overflow-y : auto;
+	display:block;
+}
+
+.custom-card{
+	cursor:pointer;
+}
+.custom-card:not(:first-child) .card-body{
+	display:none;
+}
+
+.card-highlight{
+	border:1px solid #660033;
+}
+
+.card-header-color{
+	background-color: #660033;
+	color: white;
+}
+
+.navbar{
+	background-color: #660033;
+}
+
+.navbar-brand{
+	color: white;
+}
+
+.btn-outline-violet{
+	background-color: #660033;
+	color:white;
+	font-weight:bold;
+}
+
+.btn-outline-violet:hover{
+	border: 2px solid #660033;
+	color:#660033;
+	font-weight:bold;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+  height:10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #d6d6c2; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: grey; 
+}

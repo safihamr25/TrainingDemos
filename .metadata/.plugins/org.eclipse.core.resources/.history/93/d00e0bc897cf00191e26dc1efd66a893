@@ -1,0 +1,161 @@
+package com.example.demo;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.*;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.UIAsAService.model.EntityMetaData;
+import com.UIAsAService.model.EntityRecord;
+import com.UIAsAService.model.WebInputTag;
+import com.mongodb.client.model.Field;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
+public class UiAsAServiceApplicationTests {
+ @Autowired
+ private TestRestTemplate restTemplate;
+
+ @Test
+ public void test()
+ {
+     UiAsAServiceApplication.main(new String[]{ });
+ }
+
+  @Test
+  public void testGetAllEntityMetaData() {
+
+	  ResponseEntity<List<EntityMetaData>> responseEntity = restTemplate.exchange(
+			  "/getEntityMetaData",
+			  HttpMethod.GET,
+			  null,
+			  new ParameterizedTypeReference<List<EntityMetaData>>() {});
+
+	  List<EntityMetaData> responseBody = responseEntity.getBody();
+	  assertEquals(HttpStatus.OK,responseEntity.getStatusCode());
+  }
+
+  @Test
+  public void testGetDataByEntityName() {
+
+	  ResponseEntity<List<EntityMetaData>> responseEntityMetaByName = restTemplate.exchange(
+			  "/getEntityMetaData/customer",
+			  HttpMethod.GET,
+			  null,
+			  new ParameterizedTypeReference<List<EntityMetaData>>() {});
+
+	  List<EntityMetaData> responseBody = responseEntityMetaByName.getBody();
+	  assertEquals(HttpStatus.OK,responseEntityMetaByName.getStatusCode());
+  }
+
+
+  @Test
+  public void testAddEntityRecord() {
+	  Map<String,String> field = new HashMap<String,String>();
+	  field.put("branch","20800");field.put("baseno","8028");
+	  field.put("customername","Ram");field.put("shortname","Raj");
+	  field.put("add1","null");field.put("add2","null");field.put("add3","");
+	  field.put("isissuer","0");field.put("gfcid","1011062533");
+	  field.put("gfpid","0");field.put("classification","0");
+	  field.put("liabilityno","0");field.put("cls","N");
+	  field.put("countrycode","91");field.put("modules","null");
+	  field.put("phone","044-12345678");field.put("mobile","9994417125");
+	  field.put("faxnumber","null");field.put("email","null");
+	  field.put("corporate","0");field.put("restricted","0");field.put("active","1");
+	  EntityRecord entityRecord = new EntityRecord("20000","customer",2,"as12345",
+			  "2004-02-14 06:30:55:0","we12345","2004-02-14 06:30:55:0",field);
+	  ResponseEntity<EntityRecord> responseAddEntity = restTemplate.postForEntity(
+			  "/EntityRecord/",
+			  entityRecord,
+			  EntityRecord.class
+			  );
+
+	  EntityRecord responseBody = responseAddEntity.getBody();
+	  assertEquals(HttpStatus.OK,responseAddEntity.getStatusCode());
+  }
+
+  @Test
+  public void testUpdateEntityMetaData() {
+	  EntityMetaData entityMetaData = new EntityMetaData();
+	  ResponseEntity<EntityRecord> responseAddEntity = restTemplate.postForEntity(
+			  "/updateEntityMetaData/",
+			  entityMetaData,
+			  EntityRecord.class
+			  );
+
+	  EntityRecord responseBody = responseAddEntity.getBody();
+	  assertEquals(HttpStatus.OK,responseAddEntity.getStatusCode());
+  }
+
+  @Test
+  public void testDeleteEntity() {
+	  HttpHeaders header = new HttpHeaders();
+	  ResponseEntity<EntityRecord> responseDeleteEntity = restTemplate.exchange(
+			  "/deleteEntityRecord/1",
+			  HttpMethod.POST,
+			  new HttpEntity<>(header),
+			  EntityRecord.class,
+			  new EntityRecord());
+
+	  EntityRecord responseBody = responseDeleteEntity.getBody();
+	  assertEquals(HttpStatus.OK,responseDeleteEntity.getStatusCode());
+
+  }
+
+  @Test
+  public void testNegativeDeleteEntity() {
+	  HttpHeaders header = new HttpHeaders();
+	  ResponseEntity<EntityRecord> responseDeleteEntity = restTemplate.exchange(
+			  "/deleteEntityRecord/1000",
+			  HttpMethod.POST,
+			  new HttpEntity<>(header),
+			  EntityRecord.class,
+			  new EntityRecord());
+
+	  EntityRecord responseBody = responseDeleteEntity.getBody();
+	  assertEquals(HttpStatus.OK,responseDeleteEntity.getStatusCode());
+	  assertEquals(null,responseBody);
+
+  }
+
+  @Test
+  public void testGetAllEntityRecord() {
+	  ResponseEntity<List<EntityRecord>> responseGetEntityRecord = restTemplate.exchange(
+			  "/getEntityRecord/customer",
+			  HttpMethod.GET,
+			  null,
+			  new ParameterizedTypeReference<List<EntityRecord>>() {});
+
+	  List<EntityRecord> responseBody = responseGetEntityRecord.getBody();
+	  assertEquals(HttpStatus.OK,responseGetEntityRecord.getStatusCode());
+
+  }
+
+  @Test
+  public void testNegativeGetAllEntityRecord() {
+	  ResponseEntity<List<EntityRecord>> responseGetEntityRecord = restTemplate.exchange(
+			  "/getEntityRecord/supplier",
+			  HttpMethod.GET,
+			  null,
+			  new ParameterizedTypeReference<List<EntityRecord>>() {});
+
+	  List<EntityRecord> responseBody = responseGetEntityRecord.getBody();
+	  assertEquals(HttpStatus.OK,responseGetEntityRecord.getStatusCode());
+	  assertEquals(0,responseBody.size());
+
+  }
+
+}

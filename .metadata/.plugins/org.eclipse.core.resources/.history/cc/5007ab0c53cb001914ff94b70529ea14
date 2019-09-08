@@ -1,0 +1,140 @@
+var app = angular.module("myApp", []);
+
+app.controller("myCtrl", function($scope,$http) {
+  $scope.firstName = "John";
+  $scope.lastName = "Doe";
+  $scope.entityRecords = [{"tablename":"customer",
+	 "records":[{"branch":"adyar","baseno":"12563","availability":"4"},
+		 		{"branch":"idayar","baseno":"123363","availability":"14"}] 
+  }];
+  $scope.entityMetadata = [{"tablename":"customer",
+	"fields" : [{"columnname":"branch","datatype":"varchar","length":"10","label":"Branch","WebInputTag":{"tag":"input","options":[]}},
+				{"columnname":"integer","datatype":"int","length":"5","label":"Integer","WebInputTag":{"tag":"input","options":[]}},
+				{"columnname":"baseno","datatype":"int","length":"12","label":"Base Number","WebInputTag":{"tag":"dropdown","options":["2530","3465","8437"]}},
+				{"columnname":"active","datatype":"bit","length":"1","label":"Active","WebInputTag":{"tag":"input","options":[]}},
+				{"columnname":"Price","datatype":"numeric","length":"3","precision":"4","label":"Price","WebInputTag":{"tag":"input","options":[]}},
+				{"columnname":"makerid","datatype":"soeid","length":"7","label":"Maker ID","WebInputTag":{"tag":"input","options":[]}},
+				{"columnname":"makerdt","datatype":"date","length":"25","label":"Maker Date","WebInputTag":{"tag":"input","options":[]}},
+				{"columnname":"email","datatype":"email","length":"50","label":"Email","WebInputTag":{"tag":"input","options":[]}},]  
+  }];
+  
+  $scope.showForm = false;
+  
+  $scope.changeView = function(){
+	  
+	  $scope.showForm = !$scope.showForm;
+	  
+  }
+  
+  $scope.fetchEntity = function(){
+	  console.log("fetched entity");
+	  $scope.entityNames = [];
+	  $http.get("/getAllEntity")
+	  .then(function(response) {
+		  angular.forEach(response.data, function(value, key){
+		      console.log(key+" : "+value);
+		      angular.forEach(value, function(v,k){
+		    	  console.log("k "+k + "v "+v);
+		    	  $scope.entityNames.push(v);
+		      });
+		   });
+	  }, function(response) {
+	    // Second function handles error
+		  console.log(response);
+	  });
+	  
+  }  
+  
+  $scope.getEntityRecords = function(entityName){
+	  console.log("Get Entity records" + entityName);
+  }
+  
+  $scope.dataValidation = function(field){
+	  let option = field.datatype;
+	  switch(option){
+	  case "varchar": case "char": case "int":
+		  $scope.varcharValidation(field);
+		  break;
+//	  case "int":
+//		  $scope.integerValidation(field);
+//		  break;
+	  case "numeric":
+		  $scope.numericValidation(field);
+		  break;
+	  case "bit":
+		  $scope.bitValidation(field);
+		  break;
+	  case "soeid":
+		  $scope.soeidValidation(field);
+		  break;
+	  case "date":
+		  $scope.dateValidation(field);
+		  break;
+	  case "email":
+		  $scope.emailValidation(field);
+		  break;
+	  }
+  }
+  $scope.message = {};
+  $scope.varcharValidation = function(field){
+	  if($scope.model.entityData[field.columnname].length >  field.length){
+		  $scope.message[field.columnname]="Number of characters should not exceed "+ field.length;
+	  }
+	  else{
+		  $scope.message[field.columnname]="";
+	  }
+  }
+  
+  
+  $scope.numericValidation = function(field){
+	  let reg = "^(\\d{1,"+String(field.length)+"}(?:[\.]\\d{0,"+String(field.precision)+"})?)$";
+	  let regex = new RegExp(reg);
+	  if(!regex.test($scope.model.entityData[field.columnname])){
+		  $scope.message[field.columnname]="Can enter a value of length "+field.length+" and precision of "+field.precision; 
+	  }
+	  else{
+		  $scope.message[field.columnname]="";
+	  }
+  }
+  
+  $scope.bitValidation = function(field){
+	  alert("yes");
+	  if($scope.model.entityData[field.columnname]== '0' || $scope.model.entityData[field.columnname]== '1'){
+		  $scope.message[field.columnname]="";
+	  }
+	  else{
+		  $scope.message[field.columnname]="Please enter a bit value ( 0 or 1 )";
+	  }
+  }
+  
+  $scope.soeidValidation = function(field){
+	  let regex = /^[a-zA-Z]{2}\d{5}$/
+	  if(!regex.test($scope.model.entityData[field.columnname])){
+		  $scope.message[field.columnname]="Please enter a valid SOEID";
+	  }
+	  else{
+		  $scope.message[field.columnname]="";
+	  }
+  }
+  
+  $scope.dateValidation = function(field){
+	  let regex = /^\d{4}\-\d{2}\-\d{2}[ ]\d{2}:\d{2}:\d{2}\.\d{1}$/
+	  if(!regex.test($scope.model.entityData[field.columnname])){
+		  $scope.message[field.columnname]="Please enter a valid date";
+	  }
+	  else{
+		  $scope.message[field.columnname]="";
+	  }
+  }
+  
+  $scope.emailValidation = function(field){
+	  let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+		  if(!regex.test($scope.model.entityData[field.columnname])){
+			  $scope.message[field.columnname]="Please enter a valid email id";
+		  }
+		  else{
+			  $scope.message[field.columnname]="";
+		  }		
+  }
+  
+});

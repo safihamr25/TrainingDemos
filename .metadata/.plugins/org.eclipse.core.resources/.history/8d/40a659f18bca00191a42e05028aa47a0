@@ -1,0 +1,6 @@
+.container{
+	margin:4% 2%;
+}
+p{
+	color:red;
+}

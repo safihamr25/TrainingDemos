@@ -1,0 +1,47 @@
+package demo.springdata.mongodb;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="EntityMetaData")
+public class EntityMetaData {
+
+	@Id
+	private int id;
+	private String entityName;
+	private ArrayList<HashMap<String,Object>> fields;
+	
+	public EntityMetaData() {
+		super();
+	}
+	
+	public EntityMetaData(int id, String entityName, ArrayList<HashMap<String, Object>> fields) {
+		super();
+		this.id = id;
+		this.entityName = entityName;
+		this.fields = fields;
+	}
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getEntityName() {
+		return entityName;
+	}
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
+	}
+	public ArrayList<HashMap<String, Object>> getFields() {
+		return fields;
+	}
+	public void setFields(ArrayList<HashMap<String, Object>> fields) {
+		this.fields = fields;
+	}
+	
+}

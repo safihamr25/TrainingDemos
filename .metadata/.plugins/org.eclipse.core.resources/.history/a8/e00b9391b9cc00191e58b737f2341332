@@ -1,0 +1,16 @@
+package com.example.demo;
+
+import java.util.List;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+
+import com.UIAsAService.model.EntityMetaData;
+import com.UIAsAService.model.EntityRecord;
+
+public interface EntityRecordInterface extends MongoRepository<EntityRecord,Object> {
+	
+	@Query("{'entityName' : ?0}")
+	 List<EntityRecord> getRecordByEntityName(String entityName);
+	
+}

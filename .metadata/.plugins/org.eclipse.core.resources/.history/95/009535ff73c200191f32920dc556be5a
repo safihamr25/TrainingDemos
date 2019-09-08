@@ -1,0 +1,167 @@
+package com.example.demo.dao;
+import java.sql.Connection;
+
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import com.example.demo.business.Shipper;
+import com.example.demo.business.ShipperData;
+
+@Repository
+public class MySQLJDBCShippers implements ShipperData{
+	private final String CONNECTION_URL = "jdbc:mysql://localhost:3306/Northwind?useSSL=false&serverTimezone=UTC" +
+			"&allowPublicKeyRetrieval=true";
+	@Override
+	public List<Shipper> allShippers() {
+		// TODO Auto-generated method stub
+		List<Shipper> shippers = new ArrayList<>();
+		Connection cn = null;
+		ResultSet rs = null;
+		try{
+			Driver d = new com.mysql.cj.jdbc.Driver();
+			DriverManager.registerDriver(d);
+			cn = DriverManager.getConnection(CONNECTION_URL,"root","c0nygre");
+			Statement st = cn.createStatement();
+			rs = st.executeQuery("SELECT shipperid, companyname, phone FROM Shippers");
+			// Process the results of the query, one row at a time
+			while (rs.next()) { 
+				shippers.add(new Shipper(rs.getInt(1),rs.getString(2),rs.getString(3)));
+			}
+		}
+		catch(SQLException ex){
+			System.out.println(ex.getMessage());
+		}
+		finally{
+			if(cn != null){
+				try{
+					if(!cn.isClosed()){
+						cn.close();
+					}
+				}
+				catch(SQLException ex){
+					System.out.println(ex.getMessage());
+				}
+			}
+		}
+		return shippers;
+	}
+
+	@Override
+	public Shipper getShipperById(int id) {
+		// TODO Auto-generated method stub
+		Shipper shipper =null;
+		Connection cn = null;
+		ResultSet rs = null;
+		try{
+			Driver d = new com.mysql.cj.jdbc.Driver();
+			DriverManager.registerDriver(d);
+			cn = DriverManager.getConnection(CONNECTION_URL,"root","c0nygre");
+			PreparedStatement st = cn.prepareStatement("SELECT shipperid, companyname, phone FROM Shippers WHERE shipperid=?");
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			// Process the results of the query, one row at a time
+			while (rs.next()) { 
+				shipper = new Shipper(rs.getInt(1),rs.getString(2),rs.getString(3));
+			}
+		}
+		catch(SQLException ex){
+			System.out.println(ex.getMessage());
+		}
+		finally{
+			if(cn != null){
+				try{
+					if(!cn.isClosed()){
+						cn.close();
+					}
+				}
+				catch(SQLException ex){
+					System.out.println(ex.getMessage());
+				}
+			}
+		}
+		return shipper;
+	}
+
+	@Override
+	public Shipper editShipper(Shipper s) {
+		int rows = 0;
+		Shipper shipper =null;
+		Connection cn = null;
+		ResultSet rs = null;
+		try{
+			Driver d = new com.mysql.cj.jdbc.Driver();
+			DriverManager.registerDriver(d);
+			cn = DriverManager.getConnection(CONNECTION_URL,"root","c0nygre");
+			PreparedStatement st = cn.prepareStatement("UPDATE Shippers SET CompanyName = ?, Phone = ? WHERE " + 
+			"ShipperID = ?");
+			st.setString(1, s.getName());
+			st.setString(2, s.getPhone());
+			st.setInt(3, s.getId());
+			rows = st.executeUpdate();
+		}
+		catch(SQLException ex){
+			System.out.println(ex.getMessage());
+		}
+		finally{
+			if(cn != null){
+				try{
+					if(!cn.isClosed()){
+						cn.close();
+					}
+				}
+				catch(SQLException ex){
+					System.out.println(ex.getMessage());
+				}
+			}
+		}
+		return s;
+	}
+	
+	@Override
+	public int deleteShipper(int id) {
+		return 0;
+	}
+
+	@Override
+	public Shipper addShipper(Shipper s) {
+		int rows = 0;
+		Shipper shipper =null;
+		Connection cn = null;
+		ResultSet rs = null;
+		try{
+			Driver d = new com.mysql.cj.jdbc.Driver();
+			DriverManager.registerDriver(d);
+			cn = DriverManager.getConnection(CONNECTION_URL,"root","c0nygre");
+			PreparedStatement st = cn.prepareStatement("INSERT INTO Shippers VALUES ( ?, ?, ?) ");
+			st.setInt(1, s.getId());
+			st.setString(2, s.getName());
+			st.setString(3, s.getPhone());
+			rows = st.executeUpdate();
+		}
+		catch(SQLException ex){
+			System.out.println(ex.getMessage());
+		}
+		finally{
+			if(cn != null){
+				try{
+					if(!cn.isClosed()){
+						cn.close();
+					}
+				}
+				catch(SQLException ex){
+					System.out.println(ex.getMessage());
+				}
+			}
+		}
+		return s;
+	}
+
+}

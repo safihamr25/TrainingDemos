@@ -1,0 +1,20 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Shippers</title>
+<link th:href="@{/styles.css}" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<h2>Northwind Shippers</h2>
+<p><a href="/">Home</a></p>
+<table>
+	<tr><th>Company Name</th><th>Phone</th></tr>
+	<tr th:each="s:${shippers}">
+		<td><a th:href="'/edit/' + ${s.id}"><span th:text="${s.name}"></span></a></td>
+		<td th:text="${s.phone}">Price</td>
+		<td><a th:href="'/delete/' + ${s.id}">Delete Shipper</a></td>
+	</tr>
+</table>
+</body>
+</html>

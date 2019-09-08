@@ -1,0 +1,10 @@
+package com.UIAsAService.dao;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import com.UIAsAService.model.EntityMetaData;
+
+@Repository
+public class EntityMetaDataDAO implements MongoRepository<EntityMetaData, Integer>{
+	
+}

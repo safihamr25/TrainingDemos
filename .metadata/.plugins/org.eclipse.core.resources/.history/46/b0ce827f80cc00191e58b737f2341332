@@ -1,0 +1,29 @@
+package com.example.demo;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import com.UIAsAService.model.EntityMetaData;
+
+
+@Component
+public class EntityMetaDataImpl {
+
+	private EntityMetaDataInterface repository;
+	
+	@Autowired
+	public EntityMetaDataImpl(EntityMetaDataInterface repository) {
+		super();
+		this.repository = repository;
+	}
+	
+	public List<EntityMetaData> getAllData() {
+		return repository.findAll();
+	}
+	
+	public List<EntityMetaData> getDataByEntityName(){
+		return repository.getEntityNames();
+	}
+	
+}
+

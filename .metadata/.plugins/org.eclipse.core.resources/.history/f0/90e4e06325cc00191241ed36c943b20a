@@ -1,0 +1,19 @@
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class UiAsAServiceApplication {
+
+	public static void main(String[] args) {
+		ApplicationContext context = SpringApplication.run(UiAsAServiceApplication.class, args);
+//		EntityMetaDataService service = context.getBean(EntityMetaDataService.class);
+//		List<EntityMetaData> list = new ArrayList<>();
+//		list = service.doDemo();
+//		System.out.println("In main***********");
+//		System.out.println(list.toString());
+	}
+
+}

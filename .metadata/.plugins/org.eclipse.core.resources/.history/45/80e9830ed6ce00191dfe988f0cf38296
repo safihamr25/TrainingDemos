@@ -1,0 +1,17 @@
+.table-scroll{
+	height :560px;
+	overflow-y : auto;
+	display:block;
+}
+
+.custom-card{
+	cursor:pointer;
+}
+.custom-card:not(:first-child) .card-body{
+	display:none;
+	border: red 2px;
+}
+
+.card-border{
+	border: red 2px;
+}

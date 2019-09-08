@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/bootstrap.min.js"></script>
+<link
+	rel="stylesheet"
+	href="scripts/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" 
+	integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<script src="scripts/angular.min.js"></script>
+<script src="scripts/chosen.jquery.min.js"></script>
+<link
+	rel="stylesheet"
+	href="scripts/chosen.min.css">
+<link
+	rel="stylesheet"
+	href="styles/home.css">
+<body>
+	<div
+		ng-app="myApp"
+		ng-controller="myCtrl">
+		<div ng-init="model = {}">
+			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+				<span class="navbar-brand">UI As A Service</span>
+				<ul class="navbar-nav">
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle"
+						href="#"
+						ng-click="fetchEntity()"
+						id="navbardrop"
+						data-toggle="dropdown"> Get Entity </a>
+						<div class="dropdown-menu">
+							<a
+								class="dropdown-item"
+								href="#"
+								ng-click="getEntityRecords(name)"
+								ng-repeat="name in entityNames">{{name}}</a>
+						</div></li>
+				</ul>
+			</nav>
+		</div>
+		<div class="p-5">
+			<div class="row">
+				<div
+					class="col"
+					ng-show="showForm">
+					<form ng-submit="saveEntityRecord(entityName)">
+						<div
+							class="form-group"
+							ng-repeat="field in entityMetaData"
+							ng-if="field.name != 'makerdt' && field.name != 'checkerdt' ">
+							<div ng-show="field.WebInputTag.tag == 'input'">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text">{{field.label}}</div>
+									</div>
+									<input
+										ng-if="inputFieldDataTypes.indexOf(field.type) > -1 "
+										ng-model="model.entityData[field.name]"
+										type="text"
+										id="{{field.label}}"
+										class="form-control"
+										ng-keyup="dataValidation(field)"
+										ng-readonly="isUpdate && field.WebInputTag.readOnly"> 
+									<input
+										ng-if="field.type == 'int'"
+										ng-model="model.entityData[field.name]" 
+										ng-keyup="dataValidation(field)"
+										type="number"
+										class="form-control"
+										id="{{field.label}}" 
+										ng-readonly="isUpdate && field.WebInputTag.readOnly">
+									<input
+										ng-if="field.type == 'date'"
+										ng-model="model.entityData[field.name]"
+										ng-keyup="dataValidation(field)"
+										type="date"
+										class="form-control"
+										id="{{field.label}}" 
+										ng-readonly="isUpdate && field.WebInputTag.readOnly">
+								</div>
+							</div>
+							<div ng-show="field.WebInputTag.tag == 'dropdown' ">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text">{{field.label}}</div>
+									</div>
+									<select
+										class="form-control"
+										ng-model="model.entityData[field.name]"
+										ng-blur="dataValidation(field)">
+										<option
+											ng-repeat="option in field.WebInputTag.options"
+											value="{{option}}">{{option}}</option>
+									</select>
+								</div>
+							</div>
+							<span class="text-danger">{{message[field.name]}}</span>
+						</div>
+						<button
+							type="submit"
+							class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+				<div class="col-{{showForm?8:12}}">
+					<div class="card">
+						<div class="card-header">
+							<h3>
+								<strong>{{entityName}}</strong>
+								<button
+									class="btn btn-success"
+									ng-click="addEntityRecord(entityRecords[0].entityName)">add</button>
+							</h3>
+						</div>
+						<div class="table-scroll">
+						<div class="card-body">
+							<table class="table table-hover table-responsive table-scroll">
+								<thead class="thead-dark">
+									<tr>
+										<th ng-repeat="x in entityMetaData">{{x.name}}</th>
+										<th></th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="record in entityRecords">
+										<td ng-repeat="x in entityMetaData">{{record[x.name]}}</td>
+										<td><button class="btn btn-outline-warning" ng-click="updateRecord($index)"><span class="glyphicon glyphicon-edit"></span></button></td>
+										<td><button class="btn btn-outline-danger" ng-click="deleteRecord(record['id'],entityName)"><span class="glyphicon glyphicon-trash"></span></button></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <p>Value: {{model.entityData}}</p>
+		<h2>{{$parent.entityData}}</h2>
+		<p ng-repeat="name in entityRecords">{{name}}</p>
+		<p ng-repeat="field in entityMetadata[0].fields">{{field.datatype}}</p> -->
+	</div>
+</body>
+<script src="js/app.js"></script>
+</html>

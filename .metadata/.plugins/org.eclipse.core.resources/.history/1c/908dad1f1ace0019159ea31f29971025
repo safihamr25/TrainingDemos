@@ -1,0 +1,42 @@
+package com.UIAsAService.model;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+
+public class EntityMetaData {
+
+	private String entityName;
+	private ArrayList<Field> Fields;
+	
+	public EntityMetaData() {
+		super();
+	}
+	
+	public EntityMetaData(String entityName, ArrayList<HashMap<String, Object>> fields) {
+		super();
+		this.entityName = entityName;
+		this.Fields = fields;
+	}
+
+	public String getEntityName() {
+		return entityName;
+	}
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
+	}
+	public ArrayList<HashMap<String, Object>> getFields() {
+		return Fields;
+	}
+	public void setFields(ArrayList<HashMap<String, Object>> fields) {
+		this.Fields = fields;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Entity [name=%s] Fields: %s", entityName, Fields.toString());
+	}
+}

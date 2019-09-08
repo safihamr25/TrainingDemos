@@ -1,0 +1,33 @@
+package com.example.demo.dao;
+import java.util.List;
+
+import com.example.demo.business.Shipper;
+import com.example.demo.business.ShipperData;
+
+public class MySQLJDBCShippers implements ShipperData{
+
+	@Override
+	public List<Shipper> allShippers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Shipper getShipperById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Shipper editShipper(Shipper s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int deleteShipper(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

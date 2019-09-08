@@ -1,0 +1,83 @@
+package com.UIAsAService.model;
+
+import java.util.List;
+import java.util.HashMap;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
+public class EntityMetaData {
+
+	private String id;
+	private String entityName;
+<<<<<<< HEAD
+	private String id;
+	
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+=======
+>>>>>>> 610ff3c4fdf169387c362e670843362a1633b629
+	private List<Field> Field;
+	
+	public EntityMetaData() {
+		super();
+	}
+	
+<<<<<<< HEAD
+	public EntityMetaData(String entityName, List<Field> fields,String id) {
+		super();
+		this.id = id;
+		this.entityName = entityName;
+		this.Field = fields;
+=======
+//	public EntityMetaData(String entityName, List<Field> fields) {
+//		super();
+//		this.entityName = entityName;
+//		this.Field = fields;
+//	}
+
+	public String getId() {
+		return id;
+>>>>>>> 610ff3c4fdf169387c362e670843362a1633b629
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	public String getEntityName() {
+		return entityName;
+	}
+
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
+	}
+
+	public List<Field> getField() {
+		return Field;
+	}
+
+<<<<<<< HEAD
+	public void setField(List<Field> Field) {
+		this.Field = Field;
+=======
+	public void setField(List<Field> field) {
+		Field = field;
+>>>>>>> 610ff3c4fdf169387c362e670843362a1633b629
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Entity [name=%s] Fields: %s", entityName, Field);
+	}
+}

@@ -1,0 +1,118 @@
+$(document).ready(function(){
+    populateTable();
+});
+
+function populateTable(){
+	$("#shippers tbody").html("");
+	$.ajax({
+        url: '/allshippers',
+        type: 'get',
+        dataType: 'JSON',
+        success: function(response){
+            let len = response.length;
+            for(let i=0; i<len; i++){
+                let id = response[i].id;
+                let name = response[i].name;
+                let phone = response[i].phone;
+
+                let tr_str = "<tr>" +
+                    "<td align='center' >" + id + "</td>" + 
+                    "<td align='center'>" + name + "</td>" +
+                    "<td align='center'>" + phone + "</td>" +
+                    "<td align='center'><button class='edit'>Edit</button>&nbsp;" + 
+                    "<button class='delete'>Delete</button></td>"
+                    "</tr>";
+                $("#shippers tbody").append(tr_str);
+            }
+            $(document).find('.edit').on('click',function(){
+    			let s_id = $(this).parents('tr:first').find('td:eq(0)').text();
+    			populateInputs(s_id);
+			});
+			$(document).find('.delete').on('click',function(){
+    			let s_id = $(this).parents('tr:first').find('td:eq(0)').text();
+    			let shipper = $(this).parents('tr:first').find('td:eq(1)').text();
+    			if(confirm("Are you sure you want to delete " + shipper)){
+    				deleteShipper(s_id,shipper);
+    			}
+			});
+        }
+    });
+}
+
+function populateInputs(s_id){
+	$.ajax({
+        url: '/shipper/' + s_id,
+        type: 'get',
+        dataType: 'JSON',
+        success: function(response){
+            $("#sid").text(response.id);
+            $("#shipper").val(response.name);
+            $("#phone").val(response.phone);
+        }
+    });
+    $('#save').prop('disabled', false);
+    $('#add').prop('disabled', true);
+}
+
+function saveShipper(){
+	let shipper = { "id":$("#sid").text(),"name":$("#shipper").val(),"phone":$("#phone").val() };
+	$.ajax({
+        url: '/shippers',
+        type: 'put',
+        contentType: 'application/json',
+        data: JSON.stringify(shipper),
+        success: function(response){
+            $("#sid").text("");
+            $("#shipper").val("");
+            $("#phone").val("");
+            $('#save').prop('disabled', true);
+            $('#add').prop('disabled', false);
+            populateTable();
+        }
+    });
+}
+
+function phoneValidation(){
+	var regex = /[0-9\(\)\.\,\-]/;
+	console.log($("#phone").val().match(regex));
+	console.log(regex.test($("#phone").val()));
+	console.log($("#phone").val());
+	
+}
+
+function addShipper(){
+	if($("#shipper").val()!= "" && $("#phone").val() != "" ){
+		var shipper = { "id":1,"name":$("#shipper").val(),"phone":$("#phone").val() };
+		$.ajax({
+	        url: '/shippers',
+	        type: 'post',
+	        contentType: 'application/json',
+	        data: JSON.stringify(shipper),
+	        success: function(response){
+	            $("#sid").text("");
+	            $("#shipper").val("");
+	            $("#phone").val("");
+	            $('#save').prop('disabled', true);
+	            populateTable();
+	        }
+		});
+	}
+	else{
+		alert("Input Fields Cannot be empty");
+		$("#sid").text("");
+        $("#shipper").val("");
+        $("#phone").val("");
+        $('#save').prop('disabled', true);
+	}
+}
+
+function deleteShipper(s_id){
+	$.ajax({
+        url: '/shippers/' + s_id,
+        type: 'delete',
+        success: function(response){
+        	alert("Shipper with id " + response + " is deleted");
+            populateTable();
+        }
+    });
+}

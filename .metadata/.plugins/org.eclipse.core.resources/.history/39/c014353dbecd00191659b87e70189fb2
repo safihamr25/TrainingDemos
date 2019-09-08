@@ -1,0 +1,4 @@
+.table-scroll{
+	height :100%;
+	overflow : auto;
+}

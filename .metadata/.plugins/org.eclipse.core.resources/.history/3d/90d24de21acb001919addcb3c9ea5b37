@@ -1,0 +1,105 @@
+var app = angular.module("myApp", []);
+
+app.controller("myCtrl", function($scope,$http) {
+  $scope.firstName = "John";
+  $scope.lastName = "Doe";
+  $scope.entityRecords = [{"tablename":"customer",
+	 "records":[{"branch":"adyar","baseno":"12563","availability":"4"},
+		 		{"branch":"idayar","baseno":"123363","availability":"14"}] 
+  }];
+  $scope.entityMetadata = [{"tablename":"customer",
+	"fields" : [{"columnname":"branch","datatype":"varchar","length":"10","label":"Branch","WebInputTag":{"tag":"input","options":[]}},
+				{"columnname":"baseno","datatype":"number","length":"12","label":"Base Number","WebInputTag":{"tag":"dropdown","options":["2530","3465","8437"]}},
+				{"columnname":"active","datatype":"number","length":"6","label":"Active","WebInputTag":{"tag":"input","options":[]}},
+				{"columnname":"Price","datatype":"numeric","length":"3","precision":"4","label":"Price","WebInputTag":{"tag":"input","options":[]}},]  
+  }];
+  
+  $scope.showForm = false;
+  
+  $scope.changeView = function(){
+	  
+	  $scope.showForm = !$scope.showForm;
+	  
+  }
+  
+  $scope.fetchEntity = function(){
+	  console.log("fetched entity");
+	  $scope.entityNames = [];
+	  $http.get("/getAllEntity")
+	  .then(function(response) {
+		  angular.forEach(response.data, function(value, key){
+		      console.log(key+" : "+value);
+		      angular.forEach(value, function(v,k){
+		    	  console.log("k "+k + "v "+v);
+		    	  $scope.entityNames.push(v);
+		      });
+		   });
+	  }, function(response) {
+	    // Second function handles error
+		  console.log(response);
+	  });
+	  
+  }  
+  
+  $scope.getEntityRecords = function(entityName){
+	  console.log("Get Entity records" + entityName);
+  }
+  
+  $scope.dataValidation = function(field){
+	  let option = field.datatype;
+	  switch(option){
+	  case "varchar":
+		  $scope.varcharValidation(field);
+		  break;
+	  case "int":
+		  $scope.integerValidation(field);
+		  break;
+	  case "numeric":
+		  $scope.numericValidation(field);
+		  break;
+	  case "bit":
+		  $scope.bitValidation(field);
+		  break;
+//	  case "soeid":
+//		  soeidValidation();
+//		  break;
+//	  case "date":
+//		  dateValidation();
+//		  break;
+//	  case "email":
+//		  emailValidation();
+//		  break;
+	  }
+  }
+  
+  $scope.varcharValidation = function(field){
+	  if($scope.model.entityData[field.columnname].length <=  field.length){
+		  alert("true");
+	  }
+	  else{
+		  alert("false");
+	  }
+  }
+  
+  $scope.integerValidation = function(field){
+	  if($scope.model.entityData[field.columnname].length <=  field.length){
+		  alert("true");
+	  }
+	  else{
+		  alert("false");
+	  }
+  }
+  
+  $scope.numericValidation = function(field){
+	  let reg = "^(\\d{1,"+String(field.length)+"}(?:[\.]\\d{0,"+String(field.precision)+"})?)$";
+	  let regex = new RegExp(reg);
+	  if(regex.test($scope.model.entityData[field.columnname])){
+		  alert("true");
+	  }
+	  else{
+		  alert("false");
+	  }
+  }
+  
+  
+});

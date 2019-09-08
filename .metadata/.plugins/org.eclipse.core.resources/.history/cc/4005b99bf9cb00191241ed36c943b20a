@@ -1,0 +1,13 @@
+package com.UIAsASeervice.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import com.UIAsAService.model.EntityMetaData;;
+
+public interface EntityMetaDataService {
+	
+	public List<EntityMetaData> getAllData();
+	public HashMap<String,Object> getDataByEntityName(String entityName);
+	
+	
+}

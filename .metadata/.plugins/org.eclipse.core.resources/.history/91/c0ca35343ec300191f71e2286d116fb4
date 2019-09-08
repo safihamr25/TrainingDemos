@@ -1,0 +1,61 @@
+package com.example.demo;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+
+
+@Repository
+public class MySQLContact implements ContactData{
+	
+	@Autowired
+	JdbcTemplate template;
+
+	@Override
+	public List<Contact> getAllContacts() {
+		String sql = "SELECT * FROM Contact";
+		return template.query(sql, new ContactRowMapper());
+	}
+
+	@Override
+	public Contact getContactById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Contact addContact(Contact contact) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Contact updateContact(Contact contact) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Contact deleteContact(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
+
+class ContactRowMapper implements RowMapper<Contact>{
+
+	@Override
+	public Contact mapRow(ResultSet rs, int rowNum) throws SQLException {
+		// TODO Auto-generated method stub
+		return new Contact(rs.getInt("id"),
+				rs.getString("first_name"),
+				rs.getString("last_name"),
+				rs.getString("phone"));
+	}
+}

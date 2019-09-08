@@ -1,0 +1,14 @@
+package com.example.demo;
+
+import java.util.List;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+
+import com.UIAsAService.model.EntityMetaData;
+
+public interface EntityMetaDataInterface extends MongoRepository<EntityMetaData,Long> {
+    
+	@Query(fields="{entityName : 0}")
+	List<EntityMetaData> getEntityNames();
+}

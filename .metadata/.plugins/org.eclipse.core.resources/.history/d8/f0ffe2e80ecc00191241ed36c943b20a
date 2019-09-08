@@ -1,0 +1,5 @@
+package demo.springdata.mongodb;
+
+public interface EntityMetaDataRepository {
+
+}
